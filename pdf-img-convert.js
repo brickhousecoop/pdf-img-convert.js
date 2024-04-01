@@ -25,6 +25,7 @@ SOFTWARE.
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const isURL = require('is-url');
 const pdfjs = require('pdfjs-dist/legacy/build/pdf.js');
+const pdfjsWorker = require('pdfjs-dist/legacy/build/pdf.worker.js');
 const Canvas = require("canvas");
 const assert = require("assert").strict;
 const fs = require("fs");
@@ -64,6 +65,7 @@ NodeCanvasFactory.prototype = {
 };
 
 module.exports.convert = async function (pdf, conversion_config = {}) {
+  pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
   // Get the PDF in Uint8Array form
 
